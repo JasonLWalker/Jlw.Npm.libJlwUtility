@@ -30,17 +30,14 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
-    <Content Include="libJlwUtility\libJlwUtility.js" />
-    <Content Include="libJlwUtility\package.json" />
+    <Content Include="libJlwUtility.js" />
+    <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="libJlwUtility\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="libJlwUtility\libJlwUtility.min.js">
+    <Compile Include="libJlwUtility.min.js">
       <SubType>Code</SubType>
-      <DependentUpon>libJlwUtility\libJlwUtility.js</DependentUpon>
+      <DependentUpon>libJlwUtility.js</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

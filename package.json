@@ -5,6 +5,10 @@
   "author": {
     "name": "Jason L Walker"
   },
+  "files": [
+    "libJlwUtility.js",
+    "libJlwUtility.min.js"
+  ],
   "license": "MIT",
   "module": "libJlwUtility.js"
 }

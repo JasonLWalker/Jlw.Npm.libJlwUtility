@@ -1,0 +1,10 @@
+{
+  "name": "jlwutility",
+  "version": "0.0.1",
+  "description": "Jlw.Npm.libJlwUtility",
+  "author": {
+    "name": "Jason L Walker"
+  },
+  "license": "MIT",
+  "module": "libJlwUtility.js"
+}

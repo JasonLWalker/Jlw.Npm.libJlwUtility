@@ -1,7 +1,7 @@
 {
-  "name": "jlwutility",
-  "version": "0.0.1",
-  "description": "Jlw.Npm.libJlwUtility",
+  "name": "@jasonlwalker/jlwutility",
+  "version": "0.0.4",
+  "description": "Utility library for HTML5 web applications",
   "author": {
     "name": "Jason L Walker"
   },

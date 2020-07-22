@@ -5,6 +5,14 @@
   "author": {
     "name": "Jason L Walker"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JasonLWalker/Jlw.Package.Releases.git",
+    "directory": "jasonlwalker/jlwutility"
+  },
   "files": [
     "libJlwUtility.js",
     "libJlwUtility.min.js"

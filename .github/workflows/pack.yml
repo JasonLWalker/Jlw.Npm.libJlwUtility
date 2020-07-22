@@ -25,14 +25,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Install np
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-      - run: npm install --global np
+#      - name: Install np
+#      - uses: actions/setup-node@v1
+#        with:
+#          node-version: '10.x'
+#      - run: npm install --global np
         
-      - name: Create Release
-      - run: np patch
+#      - name: Create Release
+#      - run: np patch
         
 #        id: create_release
 #        uses: actions/create-release@v1

@@ -1,10 +1,11 @@
 {
   "name": "@jasonlwalker/jlwutility",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Utility library for HTML5 web applications",
   "author": {
     "name": "Jason L Walker"
   },
+/*
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -17,6 +18,7 @@
     "libJlwUtility.js",
     "libJlwUtility.min.js"
   ],
+*/
   "license": "MIT",
   "module": "libJlwUtility.js"
 }

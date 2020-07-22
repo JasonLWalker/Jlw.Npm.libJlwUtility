@@ -29,12 +29,19 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+          registry-url: 'https://npm.pkg.github.com'
+          # Defaults to the user or organization that owns the workflow file
+          scope: ${{ secrets.GPR_USER }}
           
       - name: Install np
         run: npm install --global np
          
+      - name: Login to npm
+        run: npm login 
       - name: Create Release
         run: np patch
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         
 #        id: create_release
 #        uses: actions/create-release@v1

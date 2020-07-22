@@ -29,15 +29,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-          scope: ${{ secrets.GPR_USER }}
+          scope: jasonlwalker
+          user: jasonlwalker
+          access: public 
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install
          
-      - name: npm login
-        run: npm login
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Install np
         run: npm install --global np
       

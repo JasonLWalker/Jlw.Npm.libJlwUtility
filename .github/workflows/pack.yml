@@ -30,7 +30,9 @@ jobs:
         with:
           node-version: '10.x'
           scope: ${{ secrets.GPR_USER }}
-          
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install
+         
       - name: npm login
         run: npm login
         env:

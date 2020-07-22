@@ -23,8 +23,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
       - name: Install np
-        run: npm install --global np
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - run: npm install --global np
+        
       - name: Create Release
         run: np patch
         

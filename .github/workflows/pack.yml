@@ -32,7 +32,7 @@ jobs:
       - run: npm install --global np
         
       - name: Create Release
-        run: np patch
+      - run: np patch
         
 #        id: create_release
 #        uses: actions/create-release@v1

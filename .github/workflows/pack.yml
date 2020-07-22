@@ -36,8 +36,6 @@ jobs:
       - name: Install np
         run: npm install --global np
          
-      - name: Login to npm
-        run: npm login 
       - name: Create Release
         run: np patch
         env:

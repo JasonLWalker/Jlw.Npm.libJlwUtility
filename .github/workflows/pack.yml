@@ -28,10 +28,10 @@ jobs:
           scope: jasonlwalker
           registry-url: 'https://registry.npmjs.org'
          
-      - name: Configure Git user
-        run: |
-             git config --global user.email "jason@draxjinn.com"
-             git config --global user.name "Jason Walker"
+#      - name: Configure Git user
+#        run: |
+#             git config --global user.email "jason@draxjinn.com"
+#             git config --global user.name "Jason Walker"
         
       - name: Install np
         run: npm install --global np

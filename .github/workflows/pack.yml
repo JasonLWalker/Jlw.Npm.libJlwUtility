@@ -42,7 +42,7 @@ jobs:
         run: npm install --global np
       
       - name: Create Release
-        run: np patch
+        run: np patch --no-publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         

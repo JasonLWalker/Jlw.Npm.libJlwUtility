@@ -29,7 +29,7 @@ jobs:
              git config --global user.name "Jason Walker"
         
       - name: Bump Version
-        run: npm version prepatch
+        run: npm version patch
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         

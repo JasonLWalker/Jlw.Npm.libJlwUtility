@@ -53,7 +53,7 @@ jobs:
           repository-url: "https://github.com/JasonLWalker/Jlw.Package.Releases.git"
           repository-directory: "jasonlwalker/jlwutility"
           # Defaults to the user or organization that owns the workflow file
-          scope: ${{ secrets.GPR_USER }}
+          scope: "@jasonlwalker"
       # Publish to GitHub Packages
       - run: npm publish
         env:

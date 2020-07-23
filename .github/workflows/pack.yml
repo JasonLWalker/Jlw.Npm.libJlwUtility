@@ -49,8 +49,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           registry-url: 'https://npm.pkg.github.com'
+          repository: 'git://github.com/JasonLWalker/Jlw.Package.Releases.git/jasonlwalker/jlwutility'
           # Defaults to the user or organization that owns the workflow file
-          scope: ${{ secrets.GPR_USER }}
+          scope: 'jasonlwalker'
       # Publish to GitHub Packages
       - run: npm publish
         env:

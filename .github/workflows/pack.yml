@@ -17,7 +17,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-          scope: jasonlwalker
+          scope: 'jasonlwalker'
+          user: 'jasonlwalker'
           registry-url: 'https://registry.npmjs.org'
          
       - run: npm install --global np

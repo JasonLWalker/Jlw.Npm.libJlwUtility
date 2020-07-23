@@ -33,12 +33,17 @@ jobs:
 #             git config --global user.email "jason@draxjinn.com"
 #             git config --global user.name "Jason Walker"
         
-      - name: Install np
-        run: npm install --global np
+#      - name: Install np
+#        run: npm install --global np
       
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
+      - name: Bump Version
+        run: npm version prepatch
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        
 #      - name: Create Release
 #        run: np patch --no-publish
 #        env:

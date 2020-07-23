@@ -36,7 +36,7 @@ jobs:
 #        run: npm login
 
       - name: Bump Version
-        run: np patch
+        run: np patch --no-publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         

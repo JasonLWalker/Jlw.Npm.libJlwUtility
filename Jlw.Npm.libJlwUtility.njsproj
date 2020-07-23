@@ -30,7 +30,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
-    <Content Include=".npmrc" />
     <Content Include="libJlwUtility.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />

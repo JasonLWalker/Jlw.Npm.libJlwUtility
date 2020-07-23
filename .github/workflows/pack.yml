@@ -26,8 +26,6 @@ jobs:
         with:
           node-version: '10.x'
           scope: jasonlwalker
-          user: jasonlwalker
-          access: public 
           registry-url: 'https://registry.npmjs.org'
          
       - name: Configure Git user

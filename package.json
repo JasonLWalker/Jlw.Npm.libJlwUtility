@@ -5,11 +5,6 @@
   "author": {
     "name": "Jason L Walker"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JasonLWalker/Jlw.Package.Releases.git",
-    "directory": "jasonlwalker/jlwutility"
-  },  
     "files": [
     "libJlwUtility.js",
     "libJlwUtility.min.js"

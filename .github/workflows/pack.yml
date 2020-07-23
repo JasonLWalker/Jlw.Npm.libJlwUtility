@@ -33,21 +33,24 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         
-      - name: Publish to npm
+      - name: Configure Node.Js
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm publish --access public
+      - name: Publish to npm
+        run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish to GPR
+      - name: Configure Node.Js
         uses: actions/setup-node@v1
         with:
           registry-url: 'https://npm.pkg.github.com'
           scope: 'jasonlwalker'
-      - run: npm publish
+      
+      - name: Publish to GPR
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}        
 

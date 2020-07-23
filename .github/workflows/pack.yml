@@ -41,8 +41,8 @@ jobs:
 
       - name: Bump Version
         run: npm version prepatch
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         
 #      - name: Create Release
 #        run: np patch --no-publish

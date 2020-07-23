@@ -1,4 +1,4 @@
-![Generate Release](https://github.com/JasonLWalker/Jlw.Npm.libJlwUtility/workflows/Generate%20Release/badge.svg)
+![Publish Release Patch](https://github.com/JasonLWalker/Jlw.Npm.libJlwUtility/workflows/Publish%20Release%20Patch/badge.svg)
 
 # Jlw.Npm.libJlwUtility
 

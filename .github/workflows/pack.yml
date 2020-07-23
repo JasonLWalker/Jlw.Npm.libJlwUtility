@@ -8,12 +8,11 @@ on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      name:
-        values: 'pack,test'
+      ver:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Version'
         # Default value if no value is explicitly provided
-        default: 'World'
+        default: ''
         # Input has to be provided for the workflow to run
         required: false
 
@@ -46,6 +45,17 @@ jobs:
         run: np patch
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+          # Defaults to the user or organization that owns the workflow file
+          scope: ${{ secrets.GPR_USER }}
+      # Publish to GitHub Packages
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
+        
         
 #        id: create_release
 #        uses: actions/create-release@v1

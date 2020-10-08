@@ -252,10 +252,6 @@ function libJlwUtility(initOptions) {
 					hidePleaseWait();
 					fnAlert("Not Logged In", "Either you have not completely logged in or your session has expired. Please log in and try again.", baseUrl);
 					return true;
-				case "invalidstudentexception":
-					hidePleaseWait();
-					fnAlert("Invalid Student", "Either the student is invalid, or no student is currently active. Please select another student and try again.", baseUrl + "ChooseStudent");
-					return true;
 				case "invalidtokenexception":
 					hidePleaseWait();
 					fnAlert(data["Message"], data["ExceptionMessage"], baseUrl);
@@ -268,7 +264,11 @@ function libJlwUtility(initOptions) {
 					toastr.error(data["ExceptionMessage"], data["Message"]);
 					return true;
 				default:
-					toastr.error(data["ExceptionMessage"], data["Message"]);
+					//toastr.error(data["ExceptionMessage"], data["Message"]);
+					//return true;
+					data["Title"] = data["Message"];
+					data["Message"] = data["ExceptionMessage"];
+					break;
 			}
 		}
 		if (data["MessageType"] != null && data["MessageType"].toString()) {

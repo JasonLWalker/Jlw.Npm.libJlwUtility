@@ -231,8 +231,9 @@ function libJlwUtility(initOptions) {
 	}
 
 	function _checkAjaxMessage(data, textStatus, jqXhr) {
-		if (jqXhr.status === 401) {
-			var loc = jqXhr.getResponseHeader("location");
+		if (data["status"] === 401 && data["getResponseHeader"]) {
+			// jqXhr is returned as data on fail
+			var loc = data.getResponseHeader("location");
 			if (loc) {
 				loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
 				fnAlert("Not Logged In", "Either you have not completely logged in or your session has expired. Please log in and try again.", loc);

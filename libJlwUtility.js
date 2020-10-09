@@ -243,6 +243,7 @@ function libJlwUtility(initOptions) {
 			if (loc) {
 				loc = loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
 				fnAlert("Not Logged In", "Either you have not completely logged in or your session has expired. Please log in and try again.", loc);
+				return false;
 			}
 		}
 		

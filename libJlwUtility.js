@@ -250,15 +250,21 @@ function libJlwUtility(initOptions) {
 			return false;
 		
 		function fnAlert(title, msg, redirectUrl) {
+		    if (window.bootbox) {
 			var o = bootbox.alert({
-				title: title,
-				message: msg,
-				callback: function () {
-					if (redirectUrl)
-						window.location.replace(redirectUrl);
-				}
+			    title: title,
+			    message: msg,
+			    callback: function() {
+				if (redirectUrl)
+				    window.location.replace(redirectUrl);
+			    }
 			});
 			setModalOnTop(o);
+		    } else {
+			window.alert(msg);
+			if (redirectUrl)
+			    window.location.replace(redirectUrl);
+		    }
 		}
 
 		if (data["ExceptionType"]) {

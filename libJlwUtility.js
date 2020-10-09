@@ -231,9 +231,17 @@ function libJlwUtility(initOptions) {
 	}
 
 	function _checkAjaxMessage(data, textStatus, jqXhr) {
+		if (jqhr.status === 401) {
+			var loc = jqhr.getResponseHeader("location");
+			if (loc) {
+				loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
+				fnAlert("Not Logged In", "Either you have not completely logged in or your session has expired. Please log in and try again.", loc);
+			}
+		}
+		
 		if (!data || (!data["ExceptionType"] && !data["Message"]))
 			return false;
-
+		
 		function fnAlert(title, msg, redirectUrl) {
 			var o = bootbox.alert({
 				title: title,

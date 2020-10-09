@@ -185,14 +185,20 @@ function libJlwUtility(initOptions) {
 	function _showNotification(title, msg, type, redirectUrl) {
 
 	    function fnAlert(title, msg, redirectUrl) {
-	        bootbox.alert({
-	            title: title,
-	            message: msg,
-	            callback: function () {
-	                if (redirectUrl)
-	                    window.location.replace(redirectUrl);
-	            }
-	        });
+		if (window.bootbox) {
+			bootbox.alert({
+			    title: title,
+			    message: msg,
+			    callback: function() {
+				if (redirectUrl)
+				    window.location.replace(redirectUrl);
+			    }
+			});
+		    } else {
+					window.alert(msg);
+			if (redirectUrl)
+			    window.location.replace(redirectUrl);
+		    }
 	    }
 
 	    if (type == null)
@@ -231,9 +237,9 @@ function libJlwUtility(initOptions) {
 	}
 
 	function _checkAjaxMessage(data, textStatus, jqXhr) {
-		if (data["status"] === 401 && data["getResponseHeader"]) {
-			// jqXhr is returned as data on fail
-			var loc = data.getResponseHeader("location");
+		if (jqXhr && jqXhr["status"] === 401 && jqXhr["getResponseHeader"]) {
+			// jqXhr is only populated on fail
+			var loc = jqXhr.getResponseHeader("location");
 			if (loc) {
 				loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
 				fnAlert("Not Logged In", "Either you have not completely logged in or your session has expired. Please log in and try again.", loc);

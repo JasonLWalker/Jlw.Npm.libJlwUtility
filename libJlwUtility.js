@@ -241,7 +241,7 @@ function libJlwUtility(initOptions) {
 			// jqXhr is only populated on fail
 			var loc = jqXhr.getResponseHeader("location");
 			if (loc) {
-				loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
+				loc = loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
 				fnAlert("Not Logged In", "Either you have not completely logged in or your session has expired. Please log in and try again.", loc);
 			}
 		}

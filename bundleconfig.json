@@ -4,5 +4,11 @@
     "inputFiles": [
       "libJlwUtility/libJlwUtility.js"
     ]
+  },
+  {
+    "outputFileName": "libJlwUtility.min.js",
+    "inputFiles": [
+      "libJlwUtility.js"
+    ]
   }
 ]

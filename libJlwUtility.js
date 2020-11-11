@@ -246,8 +246,12 @@ function libJlwUtility(initOptions) {
 				return false;
 			}
 		}
-		
-		if (!data || (!data["ExceptionType"] && !data["Message"]))
+
+        data["Message"] = data["Message"] || data["message"];
+        data["Title"] = data["Title"] || data["title"];
+        data["MessageType"] = data["MessageType"] || data["messageType"];
+
+        if (!data || (!data["ExceptionType"] && !data["Message"]))
 			return false;
 		
 		function fnAlert(title, msg, redirectUrl) {
@@ -295,24 +299,30 @@ function libJlwUtility(initOptions) {
 		}
 		if (data["MessageType"] != null && data["MessageType"].toString()) {
 
-			switch (data["MessageType"].toString()) {
-				case messageTypes.Success:
+			switch (data["MessageType"].toString().toLowerCase()) {
+				case "success":
+                case messageTypes.Success:
 					toastr.success(data["Message"], data["Title"]);
 					break;
-				case messageTypes.Info:
+                case "info":
+                case messageTypes.Info:
 					toastr.info(data["Message"], data["Title"]);
 					break;
+                case "warning":
 				case messageTypes.Warning:
 					toastr.warning(data["Message"], data["Title"]);
 					break;
+                case "danger":
 				case messageTypes.Danger:
 					toastr.error(data["Message"], data["Title"]);
 					break;
+                case "redirect":
 				case messageTypes.Redirect:
 					hidePleaseWait();
 					fnAlert(data["Title"], data["Message"], data["RedirectUrl"]);
 					break;
-				case messageTypes.Alert:
+				case "alert":
+                case messageTypes.Alert:
 					hidePleaseWait();
 					fnAlert(data["Title"], data["Message"]);
 					break;

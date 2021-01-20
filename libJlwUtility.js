@@ -32,7 +32,6 @@ function libJlwUtility(initOptions) {
         t.redrawDataTable = redrawDataTable;
         t.showNotification = _showNotification;
 		t.lazyLoadLibrary = lazyLoadLibrary;
-        t.init = init;
 
         var bs = (window.bootstrap && window.bootstrap['modal']);
 
@@ -88,7 +87,7 @@ function libJlwUtility(initOptions) {
         initJquery(fnCb);
     }
 
-	t.init(initLibrary);
+	init(initLibrary);
 
 	function zeroPad(str, pad) {
 		if (!pad)

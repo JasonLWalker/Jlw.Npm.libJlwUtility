@@ -41,6 +41,7 @@ function libJlwUtility(initOptions, $) {
 		t.lazyLoadLibrary = t.lazyLoadLibrary || _lazyLoadLibrary;
 		t.fireCallback = t.fireCallback || _fireCallback;
 		t.getHighestZIndex = t.getHighestZIndex || _getHighestZIndex;
+		t.serializeMultipleFieldCallback = t.serializeMultipleFieldCallback || _fnSerializeMultipleFieldCallback;
 
         var bs = (window.bootstrap && window.bootstrap['modal']);
 
@@ -130,9 +131,22 @@ function libJlwUtility(initOptions, $) {
 		var frmData = $a.serializeArray();
 		var data = {};
 
-		$(frmData).each(function(i, o){
-			data[o.name] = o.value;
+		$(frmData).each(function (i, o) {
+			if (data[o.name] && t.serializeMultipleCallback) {
+				if (!jQuery.isArray(data[o.name])) {
+					data[o.name] = [data[o.name]];
+				}
+				data[o.name].push(o.value);
+			} else {
+				data[o.name] = o.value;
+			}
 		});
+
+		if (typeof t.serializeMultipleFieldCallback == 'function') {
+				// Re-process arrays
+			t.serializeMultipleFieldCallback(frmData, data)
+        }
+
 
 		// Re-enable disabled properties if set
 		$a.each(function (i, elem) {
@@ -143,25 +157,38 @@ function libJlwUtility(initOptions, $) {
 		return data;
 	}
 
-	function _getHighestZIndex(obj) {
+	function _fnSerializeMultipleFieldCallback(frmData, data) {
+		$(frmData).each(function (i, o) {
+			if ($.isArray(data[o.name])) {
+				var arry = data[o.name];
+				var key = o.name;
+				data[key] = '';
+				for (var n = 0; n < arry.length; n++) {
+					data[key] += (data[key] ? ',' : '') + arry[n];
+				}
+			}
+		});
+    }
+
+	function _getHighestZIndex($obj) {
 		var highest = -999;
 
 		$("*").each(function () {
-			var o = $(this);
-			var current = parseInt(o.css("z-index"), 10);
-			if (current && highest < current && o != obj)
+			var $o = $(this);
+			var current = parseInt($o.css("z-index"), 10);
+			if (current && highest < current && $o != $obj)
 				highest = current;
 		});
 		return highest;
 	}
 
 	// function to correct the ZIndex of the topmost Modal Dialog boxes
-	function _setModalOnTop(oDlg) {
-		var z = t.getHighestZIndex(oDlg);
+	function _setModalOnTop($oDlg) {
+		var z = t.getHighestZIndex($oDlg);
 		try {
-			if (oDlg) {
-				oDlg.data("bs.modal")._backdrop.css("z-index", z + 1);
-				oDlg.css("z-index", z + 2);
+			if ($oDlg) {
+				$oDlg.data("bs.modal")._backdrop.css("z-index", z + 1);
+				$oDlg.css("z-index", z + 2);
 			}
 		} catch (err) { }
 
@@ -170,13 +197,13 @@ function libJlwUtility(initOptions, $) {
 	function _showPleaseWait(sMessage) {
 		if (sMessage == null) sMessage = "Processing...";
 		$("h4>span", t.pleaseWaitDiv).html(sMessage);
-		var o = t.pleaseWaitDiv.appendTo("body").modal('show');
-        o.on("hidden.bs.modal", function (e) {
+		var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
+		$o.off("hidden.bs.modal").on("hidden.bs.modal", function (e) {
             window.setTimeout(function() {
                 $(".jlwPleaseWait").remove();
             }, 100);
         });
-		t.setModalOnTop(o);
+		t.setModalOnTop($o);
 	}
 
 	function _hidePleaseWait() {
@@ -402,37 +429,37 @@ function libJlwUtility(initOptions, $) {
 	}
 
 	function _populateFormData (oData, oFrm) {
-		var o = [];
+		var $o = [];
 		var s = '';
 		// Empty Form Data
-		o = $("input:not([type=radio])", oFrm).val("");
-		o = $("select", oFrm).val("");
-		o = $("textarea", oFrm).val("");
-		o = $("input[type=checkbox]", oFrm).val("1").prop("checked", false);
+		$o = $("input:not([type=radio])", oFrm).val("");
+		$o = $("select", oFrm).val("");
+		$o = $("textarea", oFrm).val("");
+		$o = $("input[type=checkbox]", oFrm).val("1").prop("checked", false);
 		// Populate Form Fields
 		for (var i in oData) {
-			o = $("input[name=" + i + "]", oFrm);
-			if (!o[0]) {
-				o = $("select[name=" + i + "]", oFrm);
+			$o = $("input[name=" + i + "]", oFrm);
+			if (!$o[0]) {
+				$o = $("select[name=" + i + "]", oFrm);
 			}
 			if (!o[0]) {
-				o = $("textarea[name=" + i + "]", oFrm);
+				$o = $("textarea[name=" + i + "]", oFrm);
 			}
 
-			if (o[0]) {
-				if (o.prop('type') == 'checkbox') {
-					o.prop("checked", oData[i]);
-					o.data('origValue', o.val());
+			if ($o[0]) {
+				if ($o.prop('type') == 'checkbox') {
+					$o.prop("checked", oData[i]);
+					$o.data('origValue', $o.val());
 				} else if (o.prop('type') == 'radio') {
 					s = (oData[i] ? oData[i].toString() : '');
-                    o.each(function (i, elem) {
-                        var rdo = $(elem);
-						rdo.prop("checked", rdo.val() == s);
+                    $o.each(function (i, elem) {
+                        var $rdo = $(elem);
+						$rdo.prop("checked", $rdo.val() == s);
                     });
                 } else {
 					s = (oData[i] ? oData[i].toString() : '');
-					o.val(s.trim());
-					o.data('origValue', o.val());
+					$o.val(s.trim());
+					$o.data('origValue', $o.val());
 				}
 			}
 

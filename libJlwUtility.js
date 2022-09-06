@@ -11,13 +11,9 @@ function libJlwUtility(initOptions, $) {
 	var t = initOptions['this'] || this;
 	$ = $ || window.jQuery;
 
-    initOptions = initOptions || {};
+    t.fireCallback = t.fireCallback || _fireCallback;
 
-	function _fireCallback(fnCb) {
-		if (typeof fnCb == 'function') {
-            fnCb();
-        }
-    }
+    initOptions = initOptions || {};
 
     function initLibrary() {
         var libPaths = initOptions["libPaths"] || {};
@@ -45,7 +41,6 @@ function libJlwUtility(initOptions, $) {
 		t.redrawDataTable = t.redrawDataTable || _redrawDataTable;
 		t.showNotification = t.showNotification || _showNotification;
 		t.lazyLoadLibrary = t.lazyLoadLibrary || _lazyLoadLibrary;
-		t.fireCallback = t.fireCallback || _fireCallback;
 		t.getHighestZIndex = t.getHighestZIndex || _getHighestZIndex;
 		t.serializeMultipleFieldCallback = t.serializeMultipleFieldCallback || _fnSerializeMultipleFieldCallback;
 
@@ -69,14 +64,14 @@ function libJlwUtility(initOptions, $) {
             jqTag.src = libPaths["jQuery"];
             jqTag.onload = function() {
                 t.promiseInitJquery = $.Deferred().resolve();
-                _fireCallback(fnCb);
+                t.fireCallback(fnCb);
             };
             headTag.appendChild(jqTag);
         } else {
             if (typeof $ != 'undefined') {
                 t.promiseInitJquery = $.Deferred().resolve();
             }
-            _fireCallback(fnCb);
+            t.fireCallback(fnCb);
         }
     }
 
@@ -90,6 +85,11 @@ function libJlwUtility(initOptions, $) {
         return $.Deferred().fail();
     }
 
+    function _fireCallback(fnCb) {
+        if (typeof fnCb == 'function') {
+            fnCb();
+        }
+    }
 
 	function init(fnCb) {
         initJquery(fnCb);

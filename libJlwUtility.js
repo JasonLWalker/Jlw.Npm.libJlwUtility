@@ -69,14 +69,14 @@ function libJlwUtility(initOptions, $) {
             jqTag.src = libPaths["jQuery"];
             jqTag.onload = function() {
                 t.promiseInitJquery = $.Deferred().resolve();
-                t.fireCallback(fnCb);
+                _fireCallback(fnCb);
             };
             headTag.appendChild(jqTag);
         } else {
             if (typeof $ != 'undefined') {
                 t.promiseInitJquery = $.Deferred().resolve();
             }
-            t.fireCallback(fnCb);
+            _fireCallback(fnCb);
         }
     }
 

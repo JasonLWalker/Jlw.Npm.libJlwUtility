@@ -134,7 +134,7 @@ function libJlwUtility(initOptions, $) {
 		var data = {};
 
 		$(frmData).each(function (i, o) {
-			if (data[o.name] && t.serializeMultipleCallback) {
+			if (data[o.name] && t.serializeMultipleFieldCallback) {
 				if (!$.isArray(data[o.name])) {
 					data[o.name] = [data[o.name]];
 				}

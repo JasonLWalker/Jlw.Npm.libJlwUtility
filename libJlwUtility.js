@@ -26,8 +26,7 @@ function libJlwUtility(initOptions, $) {
         t.showPleaseWait = _showPleaseWait;
 		t.hidePleaseWait = _hidePleaseWait;
 
-		_$pleaseWaitDiv = $('<div class="modal fade jlwPleaseWait" data-backdrop="static" tabindex="-1" role="dialog"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-body"><div class="text-center"><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><h4><span>Processing... </span> <button type="button" class="btn-close btn-sm" style="float: none;" data-dismiss="modal" aria-label="Close"></button></h4></div></div></div></div></div>');
-		_$pleaseWaitDiv.off().on('click', function () { t.hidePleaseWait(); })
+		_$pleaseWaitDiv = $('<div class="modal fade jlwPleaseWait" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-body"><div class="text-center"><button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button><div class="h4"><span>Processing... </span><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></div></div></div></div></div></div>');
 
 		t.pleaseWaitDiv = _$pleaseWaitDiv;
 
@@ -198,12 +197,14 @@ function libJlwUtility(initOptions, $) {
 
 	function _showPleaseWait(sMessage) {
 		if (sMessage == null) sMessage = "Processing...";
-		$("h4>span", t.pleaseWaitDiv).html(sMessage);
-		var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
+		$(".h4>span", t.pleaseWaitDiv).html(sMessage);
+		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
+
+        var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
 		$o.off("hidden.bs.modal").on("hidden.bs.modal", function (e) {
             window.setTimeout(function() {
                 $(".jlwPleaseWait").remove();
-            }, 100);
+            }, 10);
         });
 		t.setModalOnTop($o);
 	}
@@ -214,7 +215,7 @@ function libJlwUtility(initOptions, $) {
 	        if ($(".jlwPleaseWait")[0]) {
 	            _hidePleaseWait();
 	        }
-	    }, 500);
+	    }, 10);
 
 	    $(".jlwPleaseWait").modal("hide");
 	}

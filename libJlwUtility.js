@@ -33,7 +33,7 @@ function libJlwUtility(initOptions, $) {
         t.showPleaseWait = _showPleaseWait;
 		t.hidePleaseWait = _hidePleaseWait;
 
-		_$pleaseWaitDiv = $('<div class="modal fade jlwPleaseWait" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-body"><div class="text-center"><button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button><div class="h4"><span></span><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></div></div></div></div></div></div>');
+		_$pleaseWaitDiv = $('<div class="modal fade jlwPleaseWait" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-body"><div class="text-center"><button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button><div class="h4"><span></span><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></div></div></div></div></div></div>');
 
 		t.pleaseWaitDiv = _$pleaseWaitDiv;
 

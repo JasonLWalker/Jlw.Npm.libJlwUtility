@@ -1,3 +1,10 @@
+/*!
+  * Jlw Utility Library 
+  * Copyright 2012-2023 Jason L Walker
+  * Licensed under MIT (https://github.com/JasonLWalker/Jlw.Npm.libJlwUtility/blob/main/LICENSE)
+  */
+
+
 function libJlwUtility(initOptions, $) {
     var _pleaseWaitDiv = {};
     var _messageTypes = {

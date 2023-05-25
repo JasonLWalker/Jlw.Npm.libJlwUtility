@@ -5,7 +5,7 @@
   */
 
 
-function libJlwUtility(initOptions, $) {
+	var _$pleaseWaitDiv = {};
     var _pleaseWaitDiv = {};
     var _messageTypes = {
 		Success: "0",
@@ -32,8 +32,19 @@ function libJlwUtility(initOptions, $) {
         t.checkAjaxMessage = _checkAjaxMessage;
         t.showPleaseWait = _showPleaseWait;
 		t.hidePleaseWait = _hidePleaseWait;
+		t.baseUrl = '';
 
-		_$pleaseWaitDiv = $('<div class="modal fade jlwPleaseWait" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-body"><div class="text-center"><button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button><div class="h4"><span></span><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div></div></div></div></div></div></div>');
+		_$pleaseWaitDiv = $('<div class="modal fade jlwPleaseWait" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog">' +
+			'<div class="modal-dialog modal-dialog-centered" role="document">' +
+			'<div class="modal-content">' +
+			'<div class="modal-body">' +
+			'<div class="text-center">' +
+			'<button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>' +
+			'<div class="h4">' +
+			'<span></span>' +
+			'<div class="progress">' +
+			'<div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>' +
+			'</div></div></div></div></div></div></div>');
 
 		t.pleaseWaitDiv = _$pleaseWaitDiv;
 
@@ -62,7 +73,7 @@ function libJlwUtility(initOptions, $) {
 
 		t.promiseInitBootstrap = t.lazyLoadLibrary(bs, libPaths["Bootstrap"]);
 		t.promiseInitFontAwesome = t.lazyLoadLibrary(window.FontAwesome, libPaths["FontAwesome"]);
-        t.promiseInitBootstrap = t.lazyLoadLibrary(window.bootbox, libPaths["Bootbox"]);
+		t.promiseInitBootbox = t.lazyLoadLibrary(window.bootbox, libPaths["Bootbox"]);
 		t.promiseInitToastr = t.lazyLoadLibrary(window.toastr, libPaths["Toastr"]);
         t.fireCallback(t.init);
         t.fireCallback(initOptions["fnInit"]);
@@ -127,8 +138,10 @@ function libJlwUtility(initOptions, $) {
 		if (!sFormat)
 			sFormat = 'YYYY-MM-DD';
 		try {
-			s = sDate ? moment(sDate).format(sFormat) : '';
-		} catch (err) { }
+			s = sDate ? window.moment(sDate).format(sFormat) : '';
+		} catch (err) {
+			// do nothing
+		}
 		return s;
 	}
 
@@ -204,7 +217,9 @@ function libJlwUtility(initOptions, $) {
 				$oDlg.data("bs.modal")._backdrop.css("z-index", z + 1);
 				$oDlg.css("z-index", z + 2);
 			}
-		} catch (err) { }
+		} catch (err) {
+			// Do Nothing
+		}
 
 	}
 
@@ -214,8 +229,8 @@ function libJlwUtility(initOptions, $) {
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
 
         var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
-		$o.off("hidden.bs.modal").on("hidden.bs.modal", function (e) {
-            window.setTimeout(function() {
+		$o.off("hidden.bs.modal").on("hidden.bs.modal", function () {
+			window.setTimeout(function () {
                 $(".jlwPleaseWait").remove();
             }, 10);
         });
@@ -237,7 +252,7 @@ function libJlwUtility(initOptions, $) {
 
 	    function fnAlert(title, msg, redirectUrl) {
 		if (window.bootbox) {
-			bootbox.alert({
+				window.bootbox.alert({
 			    title: title,
 			    message: msg,
 			    callback: function() {
@@ -259,16 +274,16 @@ function libJlwUtility(initOptions, $) {
 
 	    switch (type) {
 	        case 'success':
-	            toastr.success(msg, title);
+				if (window.toastr) window.toastr.success(msg, title);
 	            break;
 	        case 'info':
-	            toastr.info(msg, title);
+				if (window.toastr) window.toastr.info(msg, title);
 	            break;
 	        case 'warning':
-	            toastr.warning(msg, title);
+				if (window.toastr) window.toastr.warning(msg, title);
 	            break;
 	        case 'danger':
-	            toastr.warning(msg, title);
+				if (window.toastr) window.toastr.warning(msg, title);
 	            break;
 	        case 'redirect':
 	            t.hidePleaseWait();
@@ -309,7 +324,7 @@ function libJlwUtility(initOptions, $) {
 		
 		function fnAlert(title, msg, redirectUrl) {
 		    if (window.bootbox) {
-			var o = bootbox.alert({
+				var o = window.bootbox.alert({
 			    title: title,
 			    message: msg,
 			    callback: function() {
@@ -329,18 +344,18 @@ function libJlwUtility(initOptions, $) {
 			switch (data["ExceptionType"].toLowerCase()) {
 				case "invalidloginexception":
 					t.hidePleaseWait();
-					fnAlert(t.language["notAuthorizedTitle"], t.language["notAuthorized"], baseUrl);
+					fnAlert(t.language["notAuthorizedTitle"], t.language["notAuthorized"], t.baseUrl);
 					return true;
 				case "invalidtokenexception":
 					t.hidePleaseWait();
-					fnAlert(data["Message"], data["ExceptionMessage"], baseUrl);
+					fnAlert(data["Message"], data["ExceptionMessage"], t.baseUrl);
 					return true;
 				case "statusfailexception":
 				case "statusinvalidinputexception":
 				case "system.exception":
 				case "system.data.sqlclient.sqlexception":
 					t.hidePleaseWait();
-					toastr.error(data["ExceptionMessage"], data["Message"]);
+					if (window.toastr) window.toastr.error(data["ExceptionMessage"], data["Message"]);
 					return true;
 				default:
 					data["Title"] = data["Message"];
@@ -353,19 +368,19 @@ function libJlwUtility(initOptions, $) {
 			switch (data["MessageType"].toString().toLowerCase()) {
 				case "success":
                 case t.messageTypes.Success:
-					toastr.success(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.success(data["Message"], data["Title"]);
 					break;
                 case "info":
                 case t.messageTypes.Info:
-					toastr.info(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.info(data["Message"], data["Title"]);
 					break;
                 case "warning":
 				case t.messageTypes.Warning:
-					toastr.warning(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.warning(data["Message"], data["Title"]);
 					break;
                 case "danger":
 				case t.messageTypes.Danger:
-					toastr.error(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.error(data["Message"], data["Title"]);
 					break;
                 case "redirect":
 				case t.messageTypes.Redirect:

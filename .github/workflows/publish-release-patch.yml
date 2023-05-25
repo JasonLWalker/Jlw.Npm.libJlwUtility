@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.Js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '16.x'
           scope: ${{ secrets.NPM_USER }}
           user: ${{ secrets.NPM_USER }}
           access: public 

@@ -35,6 +35,7 @@ jobs:
         
       - name: Configure before publish
         run: |
+             npm update
              npm run build
              git add package.json
              git add libJlwUtility.min.js

@@ -157,7 +157,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		var frmData = $a.serializeArray();
 		var data = {};
 
-		$(frmData).each(function (i, o) {
+		$(frmData).each(function(i, o) {
 			if (data[o.name] && t.serializeMultipleFieldCallback) {
 				if (!$.isArray(data[o.name])) {
 					data[o.name] = [data[o.name]];

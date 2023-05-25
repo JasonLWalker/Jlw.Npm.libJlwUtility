@@ -7,12 +7,12 @@
 function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	var _$pleaseWaitDiv = {};
 	var _messageTypes = {
-		Success: "0",
-		Warning: "1",
-		Info: "2",
-		Danger: "3",
-		Alert: "4",
-		Redirect: "5"
+		Success: '0',
+		Warning: '1',
+		Info: '2',
+		Danger: '3',
+		Alert: '4',
+		Redirect: '5'
 	};
 
 	initOptions = initOptions || {};
@@ -24,7 +24,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 
 
 	function initLibrary() {
-		var libPaths = initOptions["libPaths"] || {};
+		var libPaths = initOptions['libPaths'] || {};
 
 		t.get = _ajaxGet;
 		t.post = _ajaxPost;
@@ -48,9 +48,9 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		t.pleaseWaitDiv = _$pleaseWaitDiv;
 
 		t.language = {
-			pleaseWait: "Processing...",
-			notAuthorizedTitle: "Not Logged In",
-			notAuthorized: "Either you have not completely logged in or your session has expired. Please log in and try again.",
+			pleaseWait: 'Processing...',
+			notAuthorizedTitle: 'Not Logged In',
+			notAuthorized: 'Either you have not completely logged in or your session has expired. Please log in and try again.',
 			error: 'An error has occurred'
 
 		};
@@ -61,7 +61,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		t.messageTypes = t.messageTypes || _messageTypes;
 		t.formatDateString = t.formatDateString || _formatDateString;
 		t.zeroPad = t.zeroPad || _zeroPad;
-		t.redrawDataTableType = t.redrawDataTableType || "full-hold";
+		t.redrawDataTableType = t.redrawDataTableType || 'full-hold';
 		t.redrawDataTable = t.redrawDataTable || _redrawDataTable;
 		t.showNotification = t.showNotification || _showNotification;
 		t.lazyLoadLibrary = t.lazyLoadLibrary || _lazyLoadLibrary;
@@ -70,22 +70,22 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 
 		var bs = (window.bootstrap && window.bootstrap['modal']);
 
-		t.promiseInitBootstrap = t.lazyLoadLibrary(bs, libPaths["Bootstrap"]);
-		t.promiseInitFontAwesome = t.lazyLoadLibrary(window.FontAwesome, libPaths["FontAwesome"]);
-		t.promiseInitBootbox = t.lazyLoadLibrary(window.bootbox, libPaths["Bootbox"]);
-		t.promiseInitToastr = t.lazyLoadLibrary(window.toastr, libPaths["Toastr"]);
+		t.promiseInitBootstrap = t.lazyLoadLibrary(bs, libPaths['Bootstrap']);
+		t.promiseInitFontAwesome = t.lazyLoadLibrary(window.FontAwesome, libPaths['FontAwesome']);
+		t.promiseInitBootbox = t.lazyLoadLibrary(window.bootbox, libPaths['Bootbox']);
+		t.promiseInitToastr = t.lazyLoadLibrary(window.toastr, libPaths['Toastr']);
 		t.fireCallback(t.init);
-		t.fireCallback(initOptions["fnInit"]);
+		t.fireCallback(initOptions['fnInit']);
 	}
 
 	function initJquery(fnCb) {
-		var libPaths = initOptions["libPaths"] || {};
+		var libPaths = initOptions['libPaths'] || {};
 
-		if (typeof $ == 'undefined' && libPaths["jQuery"]) {
-			var headTag = document.getElementsByTagName("head")[0];
+		if (typeof $ == 'undefined' && libPaths['jQuery']) {
+			var headTag = document.getElementsByTagName('head')[0];
 			var jqTag = document.createElement('script');
 			jqTag.type = 'text/javascript';
-			jqTag.src = libPaths["jQuery"];
+			jqTag.src = libPaths['jQuery'];
 			jqTag.onload = function () {
 				t.promiseInitJquery = $.Deferred().resolve();
 				t.fireCallback(fnCb);
@@ -103,7 +103,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		if (libToCheck)
 			return $.Deferred().resolve;
 
-		if (typeof libPath == "string") {
+		if (typeof libPath == 'string') {
 			return $.getScript(libPath);
 		}
 		return $.Deferred().fail();
@@ -123,7 +123,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 
 	function _zeroPad(str, pad) {
 		if (!pad)
-			pad = "000000000";
+			pad = '000000000';
 
 		if (!str)
 			str = '';
@@ -145,13 +145,13 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _serializeFormToJson(oFrm) {
-		var $a = $("input, select, textarea", oFrm);
+		var $a = $('input, select, textarea', oFrm);
 
 		// Temporarily remove disabled properties so that values can be serialized.
 		$a.each(function (i, elem) {
 			var $o = $(elem);
-			$o.data('jlwIsDisabled', $o.prop("disabled"));
-			$o.attr("disabled", false);
+			$o.data('jlwIsDisabled', $o.prop('disabled'));
+			$o.attr('disabled', false);
 		});
 
 		var frmData = $a.serializeArray();
@@ -177,7 +177,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		// Re-enable disabled properties if set
 		$a.each(function (i, elem) {
 			var $o = $(elem);
-			$o.prop("disabled", $o.data('jlwIsDisabled'));
+			$o.prop('disabled', $o.data('jlwIsDisabled'));
 		});
 
 		return data;
@@ -199,9 +199,9 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	function _getHighestZIndex($obj) {
 		var highest = -999;
 
-		$("*").each(function () {
+		$('*').each(function () {
 			var $o = $(this);
-			var current = parseInt($o.css("z-index"), 10);
+			var current = parseInt($o.css('z-index'), 10);
 			if (current && highest < current && $o != $obj)
 				highest = current;
 		});
@@ -213,8 +213,8 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		var z = t.getHighestZIndex($oDlg);
 		try {
 			if ($oDlg) {
-				$oDlg.data("bs.modal")._backdrop.css("z-index", z + 1);
-				$oDlg.css("z-index", z + 2);
+				$oDlg.data('bs.modal')._backdrop.css('z-index', z + 1);
+				$oDlg.css('z-index', z + 2);
 			}
 		} catch (err) {
 			// Do Nothing
@@ -223,14 +223,14 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _showPleaseWait(sMessage) {
-		if (sMessage == null) sMessage = t.language["pleaseWait"];
-		$(".h4>span", t.pleaseWaitDiv).html(sMessage);
+		if (sMessage == null) sMessage = t.language['pleaseWait'];
+		$('.h4>span', t.pleaseWaitDiv).html(sMessage);
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
 
-		var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
-		$o.off("hidden.bs.modal").on("hidden.bs.modal", function () {
+		var $o = t.pleaseWaitDiv.appendTo('body').modal('show');
+		$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
 			window.setTimeout(function () {
-				$(".jlwPleaseWait").remove();
+				$('.jlwPleaseWait').remove();
 			}, 10);
 		});
 		t.setModalOnTop($o);
@@ -239,12 +239,12 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	function _hidePleaseWait() {
 		window.setTimeout(function () {
 			// set up timeout since animation doesn't always fire events correctly.
-			if ($(".jlwPleaseWait")[0]) {
+			if ($('.jlwPleaseWait')[0]) {
 				_hidePleaseWait();
 			}
 		}, 10);
 
-		$(".jlwPleaseWait").modal("hide");
+		$('.jlwPleaseWait').modal('hide');
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {
@@ -302,17 +302,17 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _checkAjaxMessage(data, textStatus, jqXhr) {
-		if (jqXhr && jqXhr["status"] === 401 && jqXhr["getResponseHeader"]) {
+		if (jqXhr && jqXhr['status'] === 401 && jqXhr['getResponseHeader']) {
 			// jqXhr is only populated on fail
-			var loc = jqXhr.getResponseHeader("location");
+			var loc = jqXhr.getResponseHeader('location');
 			if (loc) {
 				loc = loc.replace(/ReturnUrl=[\w\W]*$/i, 'ReturnUrl=' + encodeURIComponent(window.location.pathname));
-				fnAlert(t.language["notAuthorizedTitle"], t.language["notAuthorized"], loc);
+				fnAlert(t.language['notAuthorizedTitle'], t.language['notAuthorized'], loc);
 				return false;
 			}
 		}
 
-		if (!data || (!data["ExceptionType"] && !data["Message"]))
+		if (!data || (!data['ExceptionType'] && !data['Message']))
 			return false;
 
 		function fnAlert(title, msg, redirectUrl) {
@@ -333,57 +333,57 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 			}
 		}
 
-		if (data["ExceptionType"]) {
-			switch (data["ExceptionType"].toLowerCase()) {
-				case "invalidloginexception":
+		if (data['ExceptionType']) {
+			switch (data['ExceptionType'].toLowerCase()) {
+				case 'invalidloginexception':
 					t.hidePleaseWait();
-					fnAlert(t.language["notAuthorizedTitle"], t.language["notAuthorized"], t.baseUrl);
+					fnAlert(t.language['notAuthorizedTitle'], t.language['notAuthorized'], t.baseUrl);
 					return true;
-				case "invalidtokenexception":
+				case 'invalidtokenexception':
 					t.hidePleaseWait();
-					fnAlert(data["Message"], data["ExceptionMessage"], t.baseUrl);
+					fnAlert(data['Message'], data['ExceptionMessage'], t.baseUrl);
 					return true;
-				case "statusfailexception":
-				case "statusinvalidinputexception":
-				case "system.exception":
-				case "system.data.sqlclient.sqlexception":
+				case 'statusfailexception':
+				case 'statusinvalidinputexception':
+				case 'system.exception':
+				case 'system.data.sqlclient.sqlexception':
 					t.hidePleaseWait();
-					if (window.toastr) window.toastr.error(data["ExceptionMessage"], data["Message"]);
+					if (window.toastr) window.toastr.error(data['ExceptionMessage'], data['Message']);
 					return true;
 				default:
-					data["Title"] = data["Message"];
-					data["Message"] = data["ExceptionMessage"];
+					data['Title'] = data['Message'];
+					data['Message'] = data['ExceptionMessage'];
 					break;
 			}
 		}
-		if (data["MessageType"] != null && data["MessageType"].toString()) {
+		if (data['MessageType'] != null && data['MessageType'].toString()) {
 
-			switch (data["MessageType"].toString().toLowerCase()) {
-				case "success":
+			switch (data['MessageType'].toString().toLowerCase()) {
+				case 'success':
 				case t.messageTypes.Success:
-					if (window.toastr) window.toastr.success(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.success(data['Message'], data['Title']);
 					break;
-				case "info":
+				case 'info':
 				case t.messageTypes.Info:
-					if (window.toastr) window.toastr.info(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.info(data['Message'], data['Title']);
 					break;
-				case "warning":
+				case 'warning':
 				case t.messageTypes.Warning:
-					if (window.toastr) window.toastr.warning(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.warning(data['Message'], data['Title']);
 					break;
-				case "danger":
+				case 'danger':
 				case t.messageTypes.Danger:
-					if (window.toastr) window.toastr.error(data["Message"], data["Title"]);
+					if (window.toastr) window.toastr.error(data['Message'], data['Title']);
 					break;
-				case "redirect":
+				case 'redirect':
 				case t.messageTypes.Redirect:
 					t.hidePleaseWait();
-					fnAlert(data["Title"], data["Message"], data["RedirectUrl"]);
+					fnAlert(data['Title'], data['Message'], data['RedirectUrl']);
 					break;
-				case "alert":
+				case 'alert':
 				case t.messageTypes.Alert:
 					t.hidePleaseWait();
-					fnAlert(data["Title"], data["Message"]);
+					fnAlert(data['Title'], data['Message']);
 					break;
 			}
 		}
@@ -394,51 +394,51 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	function _ajaxFail(jqXhr, textStatus, errorThrown) {
 		var data = null;
 		var re = new RegExp('application/json', 'i');
-		if (re.test(jqXhr.getResponseHeader("content-type"))) {
+		if (re.test(jqXhr.getResponseHeader('content-type'))) {
 			data = $.parseJSON(jqXhr.responseText);
 		} else {
-			data = { Message: jqXhr.status + " - " + textStatus + ": " + errorThrown, MessageType: t.messageTypes.Danger, 'Title': t.language["error"] }
+			data = { Message: jqXhr.status + ' - ' + textStatus + ': ' + errorThrown, MessageType: t.messageTypes.Danger, 'Title': t.language['error'] };
 		}
 		t.checkAjaxMessage(data, textStatus, jqXhr);
 		t.hidePleaseWait();
 	}
 
 	function _ajaxGet(url, data, callback, fail) {
-		if (typeof fail != "function") fail = _ajaxFail;
+		if (typeof fail != 'function') fail = _ajaxFail;
 
 		function fnCallback(data, textStatus, jqXhr) {
 			if (t.checkAjaxMessage(data))
 				return;
 
-			if (typeof callback != "function") return;
+			if (typeof callback != 'function') return;
 			callback(data, textStatus, jqXhr);
 		}
 
-		url = url + (-1 === url.indexOf('?') ? '?' : '&') + "__=" + Number(new Date());
+		url = url + (-1 === url.indexOf('?') ? '?' : '&') + '__=' + Number(new Date());
 
 		if (!data) {
 			return $.getJSON(url).done(fnCallback).fail(fail);
 		}
 		else
-			return $.ajax({ url: url, type: "GET", contentType: "application/json", data: JSON.stringify(data), cache: false }).done(fnCallback).fail(fail);
+			return $.ajax({ url: url, type: 'GET', contentType: 'application/json', data: JSON.stringify(data), cache: false }).done(fnCallback).fail(fail);
 	}
 
 	function _ajaxPost(url, data, callback, fail) {
-		if (typeof fail == "undefined") fail = _ajaxFail;
+		if (typeof fail == 'undefined') fail = _ajaxFail;
 		function fnCallback(data, textStatus, jqXhr) {
 			if (t.checkAjaxMessage(data))
 				return;
 
-			if (typeof callback != "function") return;
+			if (typeof callback != 'function') return;
 			callback(data, textStatus, jqXhr);
 		}
 
-		url = url + (-1 === url.indexOf('?') ? '?' : '&') + "__=" + Number(new Date());
+		url = url + (-1 === url.indexOf('?') ? '?' : '&') + '__=' + Number(new Date());
 
 		if (!data)
-			return $.ajax({ url: url, type: "POST", contentType: "application/json", cache: false }).done(fnCallback).fail(fail);
+			return $.ajax({ url: url, type: 'POST', contentType: 'application/json', cache: false }).done(fnCallback).fail(fail);
 		else
-			return $.ajax({ url: url, type: "POST", contentType: "application/json", data: JSON.stringify(data), cache: false }).done(fnCallback).fail(fail);
+			return $.ajax({ url: url, type: 'POST', contentType: 'application/json', data: JSON.stringify(data), cache: false }).done(fnCallback).fail(fail);
 	}
 
 	function _debounce(fn, delay) {
@@ -456,29 +456,29 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		var $o = [];
 		var s = '';
 		// Empty Form Data
-		$o = $("input:not([type=radio])", oFrm).val("");
-		$o = $("select", oFrm).val("");
-		$o = $("textarea", oFrm).val("");
-		$o = $("input[type=checkbox]", oFrm).val("1").prop("checked", false);
+		$o = $('input:not([type=radio])', oFrm).val('');
+		$o = $('select', oFrm).val('');
+		$o = $('textarea', oFrm).val('');
+		$o = $('input[type=checkbox]', oFrm).val('1').prop('checked', false);
 		// Populate Form Fields
 		for (var i in oData) {
-			$o = $("input[name=" + i + "]", oFrm);
+			$o = $('input[name=' + i + ']', oFrm);
 			if (!$o[0]) {
-				$o = $("select[name=" + i + "]", oFrm);
+				$o = $('select[name=' + i + ']', oFrm);
 			}
 			if (!$o[0]) {
-				$o = $("textarea[name=" + i + "]", oFrm);
+				$o = $('textarea[name=' + i + ']', oFrm);
 			}
 
 			if ($o[0]) {
 				if ($o.prop('type') == 'checkbox') {
-					$o.prop("checked", oData[i]);
+					$o.prop('checked', oData[i]);
 					$o.data('origValue', $o.val());
 				} else if ($o.prop('type') == 'radio') {
 					s = (oData[i] ? oData[i].toString() : '');
 					$o.each(function (i, elem) {
 						var $rdo = $(elem);
-						$rdo.prop("checked", $rdo.val() == s);
+						$rdo.prop('checked', $rdo.val() == s);
 					});
 				} else {
 					s = (oData[i] ? oData[i].toString() : '');
@@ -494,8 +494,8 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		$(selector)
 			.each(function (i, o) {
 				try {
-					var id = $(o).prop("id");
-					var dt = $("#" + id).DataTable();
+					var id = $(o).prop('id');
+					var dt = $('#' + id).DataTable();
 					dt.draw(t.redrawDataTableType);
 				} catch (ex) {
 					// Do Nothing

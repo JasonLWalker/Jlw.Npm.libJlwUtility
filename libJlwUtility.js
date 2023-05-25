@@ -1,13 +1,12 @@
 /*!
-  * Jlw Utility Library 
+  * Jlw Utility Library
   * Copyright 2012-2023 Jason L Walker
   * Licensed under MIT (https://github.com/JasonLWalker/Jlw.Npm.libJlwUtility/blob/main/LICENSE)
   */
 
-
+function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	var _$pleaseWaitDiv = {};
-    var _pleaseWaitDiv = {};
-    var _messageTypes = {
+	var _messageTypes = {
 		Success: "0",
 		Warning: "1",
 		Info: "2",
@@ -21,16 +20,16 @@
 	var t = initOptions.this || this;
 	$ = $ || window.jQuery;
 
-    t.fireCallback = t.fireCallback || _fireCallback;
+	t.fireCallback = t.fireCallback || _fireCallback;
 
 
-    function initLibrary() {
-        var libPaths = initOptions["libPaths"] || {};
+	function initLibrary() {
+		var libPaths = initOptions["libPaths"] || {};
 
-        t.get = _ajaxGet;
-        t.post = _ajaxPost;
-        t.checkAjaxMessage = _checkAjaxMessage;
-        t.showPleaseWait = _showPleaseWait;
+		t.get = _ajaxGet;
+		t.post = _ajaxPost;
+		t.checkAjaxMessage = _checkAjaxMessage;
+		t.showPleaseWait = _showPleaseWait;
 		t.hidePleaseWait = _hidePleaseWait;
 		t.baseUrl = '';
 
@@ -69,56 +68,56 @@
 		t.getHighestZIndex = t.getHighestZIndex || _getHighestZIndex;
 		t.serializeMultipleFieldCallback = t.serializeMultipleFieldCallback || _fnSerializeMultipleFieldCallback;
 
-        var bs = (window.bootstrap && window.bootstrap['modal']);
+		var bs = (window.bootstrap && window.bootstrap['modal']);
 
 		t.promiseInitBootstrap = t.lazyLoadLibrary(bs, libPaths["Bootstrap"]);
 		t.promiseInitFontAwesome = t.lazyLoadLibrary(window.FontAwesome, libPaths["FontAwesome"]);
 		t.promiseInitBootbox = t.lazyLoadLibrary(window.bootbox, libPaths["Bootbox"]);
 		t.promiseInitToastr = t.lazyLoadLibrary(window.toastr, libPaths["Toastr"]);
-        t.fireCallback(t.init);
-        t.fireCallback(initOptions["fnInit"]);
-    }
+		t.fireCallback(t.init);
+		t.fireCallback(initOptions["fnInit"]);
+	}
 
-    function initJquery(fnCb) {
-        var libPaths = initOptions["libPaths"] || {};
+	function initJquery(fnCb) {
+		var libPaths = initOptions["libPaths"] || {};
 
-        if(typeof $ == 'undefined' && libPaths["jQuery"]) {
-            var headTag = document.getElementsByTagName("head")[0];
-            var jqTag = document.createElement('script');
-            jqTag.type = 'text/javascript';
-            jqTag.src = libPaths["jQuery"];
-            jqTag.onload = function() {
-                t.promiseInitJquery = $.Deferred().resolve();
-                t.fireCallback(fnCb);
-            };
-            headTag.appendChild(jqTag);
-        } else {
-            if (typeof $ != 'undefined') {
-                t.promiseInitJquery = $.Deferred().resolve();
-            }
-            t.fireCallback(fnCb);
-        }
-    }
+		if (typeof $ == 'undefined' && libPaths["jQuery"]) {
+			var headTag = document.getElementsByTagName("head")[0];
+			var jqTag = document.createElement('script');
+			jqTag.type = 'text/javascript';
+			jqTag.src = libPaths["jQuery"];
+			jqTag.onload = function () {
+				t.promiseInitJquery = $.Deferred().resolve();
+				t.fireCallback(fnCb);
+			};
+			headTag.appendChild(jqTag);
+		} else {
+			if (typeof $ != 'undefined') {
+				t.promiseInitJquery = $.Deferred().resolve();
+			}
+			t.fireCallback(fnCb);
+		}
+	}
 
 	function _lazyLoadLibrary(libToCheck, libPath) {
-        if (libToCheck)
-            return $.Deferred().resolve;
+		if (libToCheck)
+			return $.Deferred().resolve;
 
 		if (typeof libPath == "string") {
 			return $.getScript(libPath);
-        }
-        return $.Deferred().fail();
-    }
+		}
+		return $.Deferred().fail();
+	}
 
-    function _fireCallback(fnCb) {
-        if (typeof fnCb == 'function') {
-            fnCb();
-        }
-    }
+	function _fireCallback(fnCb) {
+		if (typeof fnCb == 'function') {
+			fnCb();
+		}
+	}
 
 	function init(fnCb) {
-        initJquery(fnCb);
-    }
+		initJquery(fnCb);
+	}
 
 	init(initLibrary);
 
@@ -133,7 +132,7 @@
 		return pad.substring(0, pad.length - str.length) + str;
 	}
 
-	function _formatDateString(sDate,sFormat) {
+	function _formatDateString(sDate, sFormat) {
 		var s = '';
 		if (!sFormat)
 			sFormat = 'YYYY-MM-DD';
@@ -170,9 +169,9 @@
 		});
 
 		if (typeof t.serializeMultipleFieldCallback == 'function') {
-            // Re-process arrays
-            t.serializeMultipleFieldCallback(frmData, data);
-        }
+			// Re-process arrays
+			t.serializeMultipleFieldCallback(frmData, data);
+		}
 
 
 		// Re-enable disabled properties if set
@@ -195,7 +194,7 @@
 				}
 			}
 		});
-    }
+	}
 
 	function _getHighestZIndex($obj) {
 		var highest = -999;
@@ -228,77 +227,77 @@
 		$(".h4>span", t.pleaseWaitDiv).html(sMessage);
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
 
-        var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
+		var $o = t.pleaseWaitDiv.appendTo("body").modal('show');
 		$o.off("hidden.bs.modal").on("hidden.bs.modal", function () {
 			window.setTimeout(function () {
-                $(".jlwPleaseWait").remove();
-            }, 10);
-        });
+				$(".jlwPleaseWait").remove();
+			}, 10);
+		});
 		t.setModalOnTop($o);
 	}
 
 	function _hidePleaseWait() {
-	    window.setTimeout(function() {
-            // set up timeout since animation doesn't always fire events correctly.
-	        if ($(".jlwPleaseWait")[0]) {
-	            _hidePleaseWait();
-	        }
-	    }, 10);
+		window.setTimeout(function () {
+			// set up timeout since animation doesn't always fire events correctly.
+			if ($(".jlwPleaseWait")[0]) {
+				_hidePleaseWait();
+			}
+		}, 10);
 
-	    $(".jlwPleaseWait").modal("hide");
+		$(".jlwPleaseWait").modal("hide");
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {
 
-	    function fnAlert(title, msg, redirectUrl) {
-		if (window.bootbox) {
+		function fnAlert(title, msg, redirectUrl) {
+			if (window.bootbox) {
 				window.bootbox.alert({
-			    title: title,
-			    message: msg,
-			    callback: function() {
+					title: title,
+					message: msg,
+					callback: function () {
+						if (redirectUrl)
+							window.location.replace(redirectUrl);
+					}
+				});
+			} else {
+				window.alert(msg);
 				if (redirectUrl)
-				    window.location.replace(redirectUrl);
-			    }
-			});
-		    } else {
-					window.alert(msg);
-			if (redirectUrl)
-			    window.location.replace(redirectUrl);
-		    }
-	    }
+					window.location.replace(redirectUrl);
+			}
+		}
 
-	    if (type == null)
-	        type = 'info';
+		if (type == null)
+			type = 'info';
 
-	    type = type.toString().toLowerCase();
+		type = type.toString().toLowerCase();
 
-	    switch (type) {
-	        case 'success':
+		switch (type) {
+			case 'success':
 				if (window.toastr) window.toastr.success(msg, title);
-	            break;
-	        case 'info':
+				break;
+			case 'info':
 				if (window.toastr) window.toastr.info(msg, title);
-	            break;
-	        case 'warning':
+				break;
+			case 'warning':
 				if (window.toastr) window.toastr.warning(msg, title);
-	            break;
-	        case 'danger':
+				break;
+			case 'danger':
 				if (window.toastr) window.toastr.warning(msg, title);
-	            break;
-	        case 'redirect':
-	            t.hidePleaseWait();
-	            fnAlert(msg, title);
-	            break;
-	        case 'alert':
-	            t.hidePleaseWait();
-	            fnAlert(msg, title, redirectUrl);
-	            break;
-	    }
+				break;
+			case 'redirect':
+				t.hidePleaseWait();
+				fnAlert(msg, title);
+				break;
+			case 'alert':
+				t.hidePleaseWait();
+				fnAlert(msg, title, redirectUrl);
+				break;
+		}
 
-	    if (redirectUrl && type != 'alert')
-	        window.setTimeout(function () {
-	            window.location.replace(redirectUrl);
-	        }, 1500);
+		if (redirectUrl && type != 'alert')
+			window.setTimeout(function () {
+				window.location.replace(redirectUrl);
+			}, 1500);
 
 	}
 
@@ -307,37 +306,31 @@
 			// jqXhr is only populated on fail
 			var loc = jqXhr.getResponseHeader("location");
 			if (loc) {
-				loc = loc.replace(/ReturnUrl=[\w\W]*$/i,'ReturnUrl='+encodeURIComponent(window.location.pathname));
+				loc = loc.replace(/ReturnUrl=[\w\W]*$/i, 'ReturnUrl=' + encodeURIComponent(window.location.pathname));
 				fnAlert(t.language["notAuthorizedTitle"], t.language["notAuthorized"], loc);
 				return false;
 			}
 		}
 
-		/*
-        data["Message"] = data["Message"] || data["message"];
-        data["Title"] = data["Title"] || data["title"];
-        data["MessageType"] = data["MessageType"] || data["messageType"];
-		*/
-
-        if (!data || (!data["ExceptionType"] && !data["Message"]))
+		if (!data || (!data["ExceptionType"] && !data["Message"]))
 			return false;
-		
+
 		function fnAlert(title, msg, redirectUrl) {
-		    if (window.bootbox) {
+			if (window.bootbox) {
 				var o = window.bootbox.alert({
-			    title: title,
-			    message: msg,
-			    callback: function() {
+					title: title,
+					message: msg,
+					callback: function () {
+						if (redirectUrl)
+							window.location.replace(redirectUrl);
+					}
+				});
+				t.setModalOnTop(o);
+			} else {
+				window.alert(msg);
 				if (redirectUrl)
-				    window.location.replace(redirectUrl);
-			    }
-			});
-			t.setModalOnTop(o);
-		    } else {
-			window.alert(msg);
-			if (redirectUrl)
-			    window.location.replace(redirectUrl);
-		    }
+					window.location.replace(redirectUrl);
+			}
 		}
 
 		if (data["ExceptionType"]) {
@@ -367,28 +360,28 @@
 
 			switch (data["MessageType"].toString().toLowerCase()) {
 				case "success":
-                case t.messageTypes.Success:
+				case t.messageTypes.Success:
 					if (window.toastr) window.toastr.success(data["Message"], data["Title"]);
 					break;
-                case "info":
-                case t.messageTypes.Info:
+				case "info":
+				case t.messageTypes.Info:
 					if (window.toastr) window.toastr.info(data["Message"], data["Title"]);
 					break;
-                case "warning":
+				case "warning":
 				case t.messageTypes.Warning:
 					if (window.toastr) window.toastr.warning(data["Message"], data["Title"]);
 					break;
-                case "danger":
+				case "danger":
 				case t.messageTypes.Danger:
 					if (window.toastr) window.toastr.error(data["Message"], data["Title"]);
 					break;
-                case "redirect":
+				case "redirect":
 				case t.messageTypes.Redirect:
 					t.hidePleaseWait();
 					fnAlert(data["Title"], data["Message"], data["RedirectUrl"]);
 					break;
 				case "alert":
-                case t.messageTypes.Alert:
+				case t.messageTypes.Alert:
 					t.hidePleaseWait();
 					fnAlert(data["Title"], data["Message"]);
 					break;
@@ -483,11 +476,11 @@
 					$o.data('origValue', $o.val());
 				} else if ($o.prop('type') == 'radio') {
 					s = (oData[i] ? oData[i].toString() : '');
-                    $o.each(function (i, elem) {
-                        var $rdo = $(elem);
+					$o.each(function (i, elem) {
+						var $rdo = $(elem);
 						$rdo.prop("checked", $rdo.val() == s);
-                    });
-                } else {
+					});
+				} else {
 					s = (oData[i] ? oData[i].toString() : '');
 					$o.val(s.trim());
 					$o.data('origValue', $o.val());
@@ -504,10 +497,12 @@
 					var id = $(o).prop("id");
 					var dt = $("#" + id).DataTable();
 					dt.draw(t.redrawDataTableType);
-				} catch (ex) {}
+				} catch (ex) {
+					// Do Nothing
+				}
 			});
 	}
 
-    return t;
+	return t;
 }
 

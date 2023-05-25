@@ -22,7 +22,9 @@ jobs:
           access: public 
           registry-url: 'https://registry.npmjs.org'
          
-      - run: npm install --global uglify-js
+      - run: |
+             npm install --global uglify-js
+             npm install --global eslint
          
       - name: Checkout code
         uses: actions/checkout@v2

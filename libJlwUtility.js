@@ -87,6 +87,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 			jqTag.type = 'text/javascript';
 			jqTag.src = libPaths['jQuery'];
 			jqTag.onload = function () {
+				$ = window.jQuery;
 				t.promiseInitJquery = $.Deferred().resolve();
 				t.fireCallback(fnCb);
 			};

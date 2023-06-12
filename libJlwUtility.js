@@ -248,13 +248,17 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		$('.h4>span', t.pleaseWaitDiv).html(sMessage);
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
 
-		var $o = t.pleaseWaitDiv.appendTo('body').modal('show');
-		$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
-			window.setTimeout(function () {
-				$('.jlwPleaseWait').remove();
-			}, 10);
-		});
-		t.setModalOnTop($o);
+		var $o = t.pleaseWaitDiv.appendTo('body');
+
+		window.setTimeout(function () {
+			$o.modal('show');
+			$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
+				window.setTimeout(function () {
+					$('.jlwPleaseWait').remove();
+				}, 10);
+			});
+			t.setModalOnTop($o);
+		}, 10);
 	}
 
 	function _hidePleaseWait() {

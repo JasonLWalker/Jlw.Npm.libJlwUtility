@@ -249,15 +249,15 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
 
 		var $o = t.pleaseWaitDiv.appendTo('body');
+		$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
+			$('.modal.jlwPleaseWait').remove();
+		});
+		$o.off('shown.bs.modal').on('shown.bs.modal', function () {
+			t.setModalOnTop($o);
+		});
 
 		window.setTimeout(function () {
 			$o.modal('show');
-			window.setTimeout(function () {
-				$o.closest('.modal').on('hidden.bs.modal', function () {
-					$('.jlwPleaseWait').remove();
-				});
-				t.setModalOnTop($o);
-			}, 10);
 		}, 10);
 	}
 
@@ -267,8 +267,8 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 
 		window.setTimeout(function () {
 			// set up timeout since animation doesn't always fire events correctly.
-			if ($('.jlwPleaseWait').length > 0) {
-				$('.jlwPleaseWait').modal('hide');
+			if ($('modal.jlwPleaseWait').length > 0) {
+				$('modal.jlwPleaseWait').modal('hide');
 			}
 		}, 10);
 	}

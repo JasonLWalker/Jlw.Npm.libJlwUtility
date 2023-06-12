@@ -65,12 +65,11 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		t.redrawDataTable = t.redrawDataTable || _redrawDataTable;
 		t.showNotification = t.showNotification || _showNotification;
 		t.lazyLoadLibrary = t.lazyLoadLibrary || _lazyLoadLibrary;
+		t.lazyLoadStyle = t.lazyLoadStyle || _lazyLoadStyle;
 		t.getHighestZIndex = t.getHighestZIndex || _getHighestZIndex;
 		t.serializeMultipleFieldCallback = t.serializeMultipleFieldCallback || _fnSerializeMultipleFieldCallback;
 
-		var bs = (window.bootstrap && window.bootstrap['modal']);
-
-		t.promiseInitBootstrap = t.lazyLoadLibrary(bs, libPaths['Bootstrap']);
+		t.promiseInitBootstrap = t.lazyLoadLibrary((window.bootstrap && window.bootstrap['Modal']), libPaths['Bootstrap']);
 		t.promiseInitFontAwesome = t.lazyLoadLibrary(window.FontAwesome, libPaths['FontAwesome']);
 		t.promiseInitBootbox = t.lazyLoadLibrary(window.bootbox, libPaths['Bootbox']);
 		t.promiseInitToastr = t.lazyLoadLibrary(window.toastr, libPaths['Toastr']);
@@ -98,6 +97,24 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 			}
 			t.fireCallback(fnCb);
 		}
+	}
+
+	function _lazyLoadStyle(fileToCheck, filePath) {
+		var sMinFile = (fileToCheck || '').toLowerCase(); 
+		var sFile = (fileToCheck || '').toLowerCase();
+		if (!filePath || (typeof filePath != 'string'))
+			return $.Deferred.fail();
+
+		if (!sMinFile.includes('.min.css'))
+			sMinFile = sMinFile.replace('.css', '.min.css');
+
+		if (sFile.includes('.min.css'))
+			sFile = sFile.replace('.min.css', '.css');
+
+		if (!($('link[href*="' + sMinFile + '"]').length > 0 || $('link[href*="' + sFile + '"]').length > 0)) {
+			$('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', fileToCheck));
+		}
+		return $.Deferred().resolve();
 	}
 
 	function _lazyLoadLibrary(libToCheck, libPath) {
@@ -224,6 +241,9 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _showPleaseWait(sMessage) {
+		if (!($ && $.fn && $.fn['modal']))
+			return;
+
 		if (sMessage == null) sMessage = t.language['pleaseWait'];
 		$('.h4>span', t.pleaseWaitDiv).html(sMessage);
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
@@ -238,14 +258,15 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _hidePleaseWait() {
+		if (!($ && $.fn && $.fn['modal']))
+			return;
+
 		window.setTimeout(function () {
 			// set up timeout since animation doesn't always fire events correctly.
-			if ($('.jlwPleaseWait')[0]) {
-				_hidePleaseWait();
+			if ($('.jlwPleaseWait').length > 0) {
+				$('.jlwPleaseWait').modal('hide');
 			}
 		}, 10);
-
-		$('.jlwPleaseWait').modal('hide');
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {

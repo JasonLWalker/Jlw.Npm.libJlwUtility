@@ -249,28 +249,36 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
 
 		var $o = t.pleaseWaitDiv.appendTo('body');
+		$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
+			$('.modal.jlwPleaseWait').remove();
+		});
+		$o.off('shown.bs.modal').on('shown.bs.modal', function () {
+			t.setModalOnTop($o);
+		});
 
 		window.setTimeout(function () {
 			$o.modal('show');
-			$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
-				window.setTimeout(function () {
-					$('.jlwPleaseWait').remove();
-				}, 10);
-			});
-			t.setModalOnTop($o);
 		}, 10);
 	}
 
 	function _hidePleaseWait() {
 		if (!($ && $.fn && $.fn['modal']))
 			return;
+		var $o = $('.jlwPleaseWait');
+		// Set shown event since it will ignore if it is in transition
+		$o.off('shown.bs.modal').on('shown.bs.modal', function () {
+			$o.modal('hide');
+		});
+		$o.modal('hide');
 
+		/*
 		window.setTimeout(function () {
 			// set up timeout since animation doesn't always fire events correctly.
-			if ($('.jlwPleaseWait').length > 0) {
-				$('.jlwPleaseWait').modal('hide');
+			if ($('modal.jlwPleaseWait').length > 0) {
+				$('modal.jlwPleaseWait').modal('hide');
 			}
 		}, 10);
+		*/
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {

@@ -99,11 +99,11 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		}
 	}
 
-	function _lazyLoadStyle(fileToCheck, filePath) {
+	function _lazyLoadStyle(fileToCheck) {
 		var sMinFile = (fileToCheck || '').toLowerCase(); 
 		var sFile = (fileToCheck || '').toLowerCase();
-		if (!filePath || (typeof filePath != 'string'))
-			return $.Deferred.fail();
+		if (!fileToCheck || (typeof fileToCheck != 'string'))
+			return $.Deferred().fail();
 
 		if (!sMinFile.includes('.min.css'))
 			sMinFile = sMinFile.replace('.css', '.min.css');
@@ -271,14 +271,6 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		});
 		$o.modal('hide');
 
-		/*
-		window.setTimeout(function () {
-			// set up timeout since animation doesn't always fire events correctly.
-			if ($('modal.jlwPleaseWait').length > 0) {
-				$('modal.jlwPleaseWait').modal('hide');
-			}
-		}, 10);
-		*/
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {

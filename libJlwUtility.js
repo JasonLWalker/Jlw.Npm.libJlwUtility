@@ -264,13 +264,21 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	function _hidePleaseWait() {
 		if (!($ && $.fn && $.fn['modal']))
 			return;
+		var $o = $('.jlwPleaseWait');
+		// Set shown event since it will ignore if it is in transition
+		$o.off('shown.bs.modal').on('shown.bs.modal', function () {
+			$o.modal('hide');
+		});
+		$o.modal('hide');
 
+		/*
 		window.setTimeout(function () {
 			// set up timeout since animation doesn't always fire events correctly.
 			if ($('modal.jlwPleaseWait').length > 0) {
 				$('modal.jlwPleaseWait').modal('hide');
 			}
 		}, 10);
+		*/
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {

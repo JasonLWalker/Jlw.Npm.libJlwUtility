@@ -252,10 +252,8 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 
 		window.setTimeout(function () {
 			$o.modal('show');
-			$o.off('hidden.bs.modal').on('hidden.bs.modal', function () {
-				window.setTimeout(function () {
-					$('.jlwPleaseWait').remove();
-				}, 10);
+			$o.on('hidden.bs.modal', function () {
+				$('.jlwPleaseWait').remove();
 			});
 			t.setModalOnTop($o);
 		}, 10);

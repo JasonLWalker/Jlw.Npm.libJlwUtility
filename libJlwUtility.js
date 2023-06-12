@@ -241,6 +241,9 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _showPleaseWait(sMessage) {
+		if (!($ && $.fn && $.fn['modal']))
+			return;
+
 		if (sMessage == null) sMessage = t.language['pleaseWait'];
 		$('.h4>span', t.pleaseWaitDiv).html(sMessage);
 		$('button.btn-close', t.pleaseWaitDiv).off().on('click', function () { t.hidePleaseWait(); });
@@ -255,14 +258,15 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _hidePleaseWait() {
+		if (!($ && $.fn && $.fn['modal']))
+			return;
+
 		window.setTimeout(function () {
 			// set up timeout since animation doesn't always fire events correctly.
-			if ($('.jlwPleaseWait')[0]) {
-				_hidePleaseWait();
+			if ($('.jlwPleaseWait').length > 0) {
+				$('.jlwPleaseWait').modal('hide');
 			}
 		}, 10);
-
-		$('.jlwPleaseWait').modal('hide');
 	}
 
 	function _showNotification(title, msg, type, redirectUrl) {

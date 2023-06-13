@@ -101,10 +101,11 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		}
 	}
 
-	function _lazyLoadStyle(fileToCheck) {
-		var sMinFile = (fileToCheck || '').toLowerCase(); 
-		var sFile = (fileToCheck || '').toLowerCase();
-		if (!fileToCheck || (typeof fileToCheck != 'string'))
+	function _lazyLoadStyle(filePath) {
+		var sFileToCheck = /^.*[/]([^/]*\.(?:min)?\.css).*$/i.replace((filePath || ''), '$1');
+		var sMinFile = (sFileToCheck || ''); 
+		var sFile = (sFileToCheck || '');
+		if (!filePath || (typeof filePath != 'string'))
 			return t.jQuery.Deferred().fail();
 
 		if (!sMinFile.includes('.min.css'))
@@ -114,7 +115,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 			sFile = sFile.replace('.min.css', '.css');
 
 		if (!(t.jQuery('link[href*="' + sMinFile + '"]').length > 0 || t.jQuery('link[href*="' + sFile + '"]').length > 0)) {
-			t.jQuery('head').append(t.jQuery('<link rel="stylesheet" type="text/css" />').attr('href', fileToCheck));
+			t.jQuery('head').append(t.jQuery('<link rel="stylesheet" type="text/css" />').attr('href', filePath));
 		}
 		return t.jQuery.Deferred().resolve();
 	}

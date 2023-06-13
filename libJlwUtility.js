@@ -119,12 +119,18 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 		return t.jQuery.Deferred().resolve();
 	}
 
-	function _lazyLoadLibrary(libToCheck, libPath) {
+	function _lazyLoadLibrary(libToCheck, libPath, options) {
 		if (libToCheck)
 			return t.jQuery.Deferred().resolve;
 
 		if (typeof libPath == 'string') {
-			return t.jQuery.getScript(libPath);
+			//return t.jQuery.getScript(libPath);
+			var opts = t.jQuery.extend(options || { cache: true }, {
+				url: libPath,
+				dataType: 'script'
+			});
+
+			return t.jQuery.ajax(opts);
 		}
 		return t.jQuery.Deferred().fail();
 	}

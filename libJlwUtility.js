@@ -102,7 +102,7 @@ function libJlwUtility (initOptions, $) { // eslint-disable-line no-unused-vars
 	}
 
 	function _lazyLoadStyle(filePath) {
-		var sFileToCheck = /^.*[/]([^/]*\.(?:min)?\.css).*$/i.replace((filePath || ''), '$1');
+		var sFileToCheck = (filePath || '').replace(/^.*[/]([^/]*\.(?:min)?\.css).*$/i, '$1');
 		var sMinFile = (sFileToCheck || ''); 
 		var sFile = (sFileToCheck || '');
 		if (!filePath || (typeof filePath != 'string'))

@@ -1,6 +1,6 @@
 {
   "name": "@jasonlwalker/jlwutility",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "Utility library for HTML5 web applications that use JQuery, Bootstrap, Bootbox, Font-Awesome, and Toastr",
   "author": {
     "name": "Jason L Walker"
